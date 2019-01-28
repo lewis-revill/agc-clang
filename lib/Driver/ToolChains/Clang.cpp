@@ -516,9 +516,11 @@ static bool mustUseNonLeafFramePointerForTarget(const llvm::Triple &Triple) {
 static bool useFramePointerForTargetByDefault(const ArgList &Args,
                                               const llvm::Triple &Triple) {
   switch (Triple.getArch()) {
+  case llvm::Triple::agc:
   case llvm::Triple::xcore:
   case llvm::Triple::wasm32:
   case llvm::Triple::wasm64:
+    // AGC never wants frame pointers.
     // XCore never wants frame pointers, regardless of OS.
     // WebAssembly never wants frame pointers.
     return false;
@@ -1284,6 +1286,7 @@ static bool isSignedCharDefault(const llvm::Triple &Triple) {
       return true;
     return false;
 
+  case llvm::Triple::agc:
   case llvm::Triple::hexagon:
   case llvm::Triple::ppc64le:
   case llvm::Triple::riscv32:
@@ -1376,6 +1379,10 @@ void Clang::RenderTargetOptions(const llvm::Triple &EffectiveTriple,
   // Add target specific flags.
   switch (TC.getArch()) {
   default:
+    break;
+
+  case llvm::Triple::agc:
+    AddAGCTargetArgs(Args, CmdArgs);
     break;
 
   case llvm::Triple::arm:
@@ -1573,6 +1580,12 @@ void Clang::AddAArch64TargetArgs(const ArgList &Args,
     if (IndirectBranches)
       CmdArgs.push_back("-mbranch-target-enforce");
   }
+}
+
+void Clang::AddAGCTargetArgs(const ArgList &Args,
+                             ArgStringList &CmdArgs) const {
+  // TODO: Add any target-specific args for AGC.
+  return;
 }
 
 void Clang::AddMIPSTargetArgs(const ArgList &Args,

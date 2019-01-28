@@ -602,6 +602,9 @@ void tools::gnutools::Assembler::ConstructJob(Compilation &C,
   switch (getToolChain().getArch()) {
   default:
     break;
+  case llvm::Triple::agc:
+    CmdArgs.push_back("-march=agc");
+    break;
   // Add --32/--64 to make sure we get the format we want.
   // This is incomplete
   case llvm::Triple::x86:
@@ -2485,6 +2488,7 @@ bool Generic_GCC::isPICDefaultForced() const {
 
 bool Generic_GCC::IsIntegratedAssemblerDefault() const {
   switch (getTriple().getArch()) {
+  case llvm::Triple::agc:
   case llvm::Triple::x86:
   case llvm::Triple::x86_64:
   case llvm::Triple::aarch64:

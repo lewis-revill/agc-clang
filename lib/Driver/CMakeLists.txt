@@ -23,6 +23,7 @@ add_clang_library(clangDriver
   Tool.cpp
   ToolChain.cpp
   ToolChains/Arch/AArch64.cpp
+  ToolChains/Arch/AGC.cpp
   ToolChains/Arch/ARM.cpp
   ToolChains/Arch/Mips.cpp
   ToolChains/Arch/PPC.cpp
@@ -30,6 +31,7 @@ add_clang_library(clangDriver
   ToolChains/Arch/Sparc.cpp
   ToolChains/Arch/SystemZ.cpp
   ToolChains/Arch/X86.cpp
+  ToolChains/AGCToolchain.cpp
   ToolChains/Ananas.cpp
   ToolChains/AMDGPU.cpp
   ToolChains/AVR.cpp

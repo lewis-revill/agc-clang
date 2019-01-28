@@ -14,6 +14,7 @@
 #include "Targets.h"
 
 #include "Targets/AArch64.h"
+#include "Targets/AGC.h"
 #include "Targets/AMDGPU.h"
 #include "Targets/ARC.h"
 #include "Targets/ARM.h"
@@ -177,6 +178,9 @@ TargetInfo *AllocateTarget(const llvm::Triple &Triple,
     default:
       return new AArch64beTargetInfo(Triple, Opts);
     }
+
+  case llvm::Triple::agc:
+    return new AGCTargetInfo(Triple);
 
   case llvm::Triple::arm:
   case llvm::Triple::thumb:
